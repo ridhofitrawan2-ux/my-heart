@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Puput ❤️</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #FF4F87;
+            --secondary: #FF8DB5;
+            --bg: #FFF5FA;
+            --card: rgba(255, 255, 255, 0.25);
+            --text: #2E2E2E;
+            --accent: #FFD6E7;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+            cursor: default;
+        }
+
+        /* Custom Cursor Heart */
+        .heart-cursor {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            font-size: 15px;
+            color: var(--primary);
+            animation: fadeOut 1s forwards;
+            transform: translate(-50%, -50%);
+        }
+
+        @keyframes fadeOut {
+            0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+            100% { opacity: 0; transform: translate(-50%, -150%) scale(0.5); }
+        }
+
+        /* Background Effects */
+        .bg-bokeh {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at 20% 20%, rgba(255, 143, 171, 0.2) 0%, transparent 40%),
+                        radial-gradient(circle at 80% 80%, rgba(255, 214, 231, 0.4) 0%, transparent 40%);
+        }
+
+        .floating-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .heart {
+            position: absolute;
+            color: var(--secondary);
+            font-size: 20px;
+            animation: floatUp linear infinite;
+            opacity: 0.6;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.8; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Loading Screen */
+        #loader {
+            position: fixed;
+            inset: 0;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            transition: opacity 1s ease;
+        }
+
+        .loader-logo {
+            font-family: 'Great Vibes', cursive;
+            font-size: 4rem;
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .loader-text {
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            margin-bottom: 1.5rem;
+            color: #888;
+        }
+
+        .loader-bar {
+            width: 200px;
+            height: 4px;
+            background: #eee;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .loader-progress {
+            height: 100%;
+            width: 0;
+            background: var(--primary);
+            animation: load 3s ease-in-out forwards;
+        }
+
+        @keyframes load {
+            0% { width: 0; }
+            100% { width: 100%; }
+        }
+
+        /* Opening Screen */
+        #opening {
+            position: fixed;
+            inset: 0;
+            background: #000;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            z-index: 9999;
+            transition: opacity 1.5s ease;
+            padding: 2rem;
+        }
+
+        .opening-text {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem;
+            opacity: 0;
+            position: absolute;
+            max-width: 800px;
+        }
+
+        .btn-open {
+            margin-top: 2rem;
+            padding: 12px 30px;
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            opacity: 0;
+            transition: all 0.3s ease;
+            display: none;
+        }
+
+        .btn-open:hover {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        /* Main Content */
+        main {
+            opacity: 0;
+            transition: opacity 2s ease;
+        }
+
+        section {
+            min-height: 100vh;
+            padding: 4rem 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hero Section */
+        #hero {
+            background: url('https://z-cdn-media.chatglm.cn/files/3073ce2c-624d-4039-9cae-81764b6107bb.jpg?auth_key=1885540116-5d8a1fa3516e411d80cd9dccb9fc1ebd-0-565d9ee0e4a07537096fca2ece99f4de') center/cover no-repeat fixed;
+            position: relative;
+            color: #fff;
+            text-align: center;
+        }
+
+        #hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.4);
+            backdrop-filter: blur(2px);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(3rem, 8vw, 6rem);
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+
+        .hero-sub {
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            font-weight: 300;
+        }
+
+        .scroll-down {
+            font-size: 2rem;
+            color: #fff;
+            animation: bounce 2s infinite;
+            text-decoration: none;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-20px); }
+            60% { transform: translateY(-10px); }
+        }
+
+        /* Glass Card Utility */
+        .glass-card {
+            background: var(--card);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.4);
+            box-shadow: 0 8px 32px rgba(255, 79, 135, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+        }
+
+        /* Love Counter */
+        .counter-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .counter-item {
+            background: rgba(255,255,255,0.5);
+            padding: 1rem;
+            border-radius: 15px;
+        }
+
+        .counter-num {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .counter-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Gallery */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s, border 0.3s;
+            border: 3px solid transparent;
+            aspect-ratio: 1;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 20px rgba(255,79,135,0.3);
+            border-color: var(--primary);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.6);
+            color: #fff;
+            padding: 0.5rem;
+            font-size: 0.8rem;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .gallery-item:hover .gallery-caption {
+            opacity: 1;
+        }
+
+        .span-4 { grid-column: span 4; }
+        .span-2 { grid-column: span 2; }
+        
+        @media (max-width: 768px) {
+            .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+            .span-4 { grid-column: span 2; }
+            .span-2 { grid-column: span 1; }
+        }
+
+        /* Reasons */
+        .reasons-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            max-width: 1000px;
+        }
+
+        .reason-card {
+            background: #fff;
+            padding: 1rem 1.5rem;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .reason-card:hover {
+            transform: translateY(-5px) scale(1.05);
+            background: var(--accent);
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            max-width: 600px;
+            margin: 2rem auto;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--secondary);
+        }
+
+        .timeline-item {
+            padding: 1rem 2rem;
+            background: #fff;
+            border-radius: 15px;
+            margin-bottom: 1.5rem;
+            width: 45%;
+            position: relative;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .timeline-item:nth-child(odd) { margin-left: 0; }
+        .timeline-item:nth-child(even) { margin-left: 55%; }
+
+        /* Letter */
+        .letter-container {
+            max-width: 700px;
+            background: #fff;
+            padding: 3rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-radius: 5px;
+            position: relative;
+            transform: rotate(-1deg);
+            background-image: linear-gradient(#e8e8e8 1px, transparent 1px);
+            background-size: 100% 2rem;
+            line-height: 2rem;
+            text-align: left;
+        }
+
+        .letter-container h2 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        /* Memory Slider */
+        .memory-slider {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            gap: 1rem;
+            max-width: 100%;
+            padding: 1rem 0;
+        }
+
+        .memory-card {
+            flex: 0 0 320px;
+            background: #fff;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            scroll-snap-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        /* Promise */
+        #promise {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #fff;
+        }
+
+        .promise-list {
+            list-style: none;
+            max-width: 600px;
+        }
+
+        .promise-list li {
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(5px);
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.5s ease;
+            font-size: 0.95rem;
+        }
+
+        .promise-list li.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .promise-list i {
+            margin-right: 1rem;
+            color: #fff;
+        }
+
+        /* Final Surprise */
+        .btn-surprise {
+            padding: 15px 40px;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(255,79,135,0.4);
+            transition: transform 0.2s;
+        }
+
+        .btn-surprise:hover { transform: scale(1.1); }
+
+        #fireworks-canvas {
+            position: fixed;
+            inset: 0;
+            background: #000;
+            z-index: 9998;
+            display: none;
+        }
+
+        .final-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: #fff;
+            z-index: 9999;
+            display: none;
+            padding: 2rem;
+            max-width: 800px;
+        }
+
+        /* Music Button */
+        .music-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            background: #fff;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            cursor: pointer;
+            color: var(--primary);
+        }
+
+        @media (max-width: 768px) {
+            .timeline::before { left: 20px; }
+            .timeline-item { width: 85%; margin-left: 50px !important; }
+            .counter-num { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background Effects -->
+    <div class="bg-bokeh"></div>
+    <div class="floating-hearts" id="hearts-container"></div>
+
+    <!-- Music Button -->
+    <div class="music-btn" id="musicBtn">
+        <i class="fas fa-music"></i>
+    </div>
+    <audio id="bgMusic" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3" type="audio/mpeg"> <!-- Ganti dengan lagu Yung Kai dkk jika ada file -->
+    </audio>
+
+    <!-- Loading Screen -->
+    <div id="loader">
+        <div class="loader-logo">❤<br>PUPUT</div>
+        <div class="loader-text">Preparing something super duper special for youuu...</div>
+        <div class="loader-bar">
+            <div class="loader-progress"></div>
+        </div>
+    </div>
+
+    <!-- Opening Screen -->
+    <div id="opening">
+        <div class="opening-text" id="text1">For the prettiest girl in the universe, Puputtttt...</div>
+        <div class="opening-text" id="text2">Aku punya sesuatu yang super duper banyak buat kamuuuu nyaa gituuuu!</div>
+        <div class="opening-text" id="text3">Happy National Girlfriend Day, sayangkuuu ❤️</div>
+        <button class="btn-open" id="openBtn">Open My Heart ❤️</button>
+    </div>
+
+    <!-- Main Content -->
+    <main style="opacity: 0;">
+        
+        <!-- Hero -->
+        <section id="hero">
+            <div class="hero-content">
+                <h1 class="hero-title">Happy National<br>Girlfriend Day<br>Puput ❤️</h1>
+                <p class="hero-sub">Thank you for existing, sayangkuuu. Kamu tuh hadiah paling indah nyaa gituuu buat hidupkuuu!</p>
+                <a href="#counter" class="scroll-down"><i class="fas fa-chevron-down"></i></a>
+            </div>
+        </section>
+
+        <!-- Love Counter -->
+        <section id="counter">
+            <div class="glass-card">
+                <h2>We've Been Together ❤️</h2>
+                <p style="margin-top: 10px; font-size: 1.1rem;">Setiap detik bersamamu tuh berharga bangetttt nyaa gituuuu!</p>
+                <div class="counter-grid">
+                    <div class="counter-item">
+                        <div class="counter-num" id="days">0</div>
+                        <div class="counter-label">Days</div>
+                    </div>
+                    <div class="counter-item">
+                        <div class="counter-num" id="hours">0</div>
+                        <div class="counter-label">Hours</div>
+                    </div>
+                    <div class="counter-item">
+                        <div class="counter-num" id="minutes">0</div>
+                        <div class="counter-label">Minutes</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery -->
+        <section id="gallery">
+            <h2 style="font-family: 'Great Vibes'; font-size: 3rem; color: var(--primary); margin-bottom: 1rem;">Gallery Puput</h2>
+            <p style="margin-bottom: 2rem; font-size: 1.1rem; text-align: center; max-width: 800px;">Sumpah, kamu tuh selalu cakep banget di setiap foto nyaa gituuuu. Kamu tau gak sih, tiap aku liat foto kamu, hatiku langsung meltssss jadi cairan kaya es krim nyaa gituuuu! 🍦❤️</p>
+            <div class="gallery-grid" id="galleryGrid"></div>
+        </section>
+
+        <!-- Reasons -->
+        <section id="reasons">
+            <h2 style="font-family: 'Great Vibes'; font-size: 3rem; color: var(--primary); margin-bottom: 1rem;">Reasons Why I Love You</h2>
+            <p style="margin-bottom: 2rem; font-size: 1.1rem; text-align: center; max-width: 800px;">Kalau ditanya kenapa aku sayang kamu, jawabannya tuh sampe bibirku bibirku pecah nyaa gituuu because kamu tuh perfect bangetttt!</p>
+            <div class="reasons-container">
+                <div class="reason-card">❤️ Senyum manismu yang bikin hatiku meltss nyaa gituuu</div>
+                <div class="reason-card">❤️ Cara kamu ketawa yang super duper cuteee</div>
+                <div class="reason-card">❤️ Sifat kamu yang baik hatinya sampe aku ngerasa beruntungnyaa gituuu bangetttt</div>
+                <div class="reason-card">❤️ Cara kamu jagain aku pas aku lagi sedihhh</div>
+                <div class="reason-card">❤️ Suara kamu yang bikin betah banget ngobrol sampe pagiii</div>
+                <div class="reason-card">❤️ Saking sabarnya kamu ngadepin aku yang kadang ngeselinnn nyaa gituuuu</div>
+                <div class="reason-card">❤️ Cara kamu ngingetin aku buat makan/minum, jaga bangetttt</div>
+                <div class="reason-card">❤️ Pesona kamu yang gak bisa aku lawan nyaa gituuu</div>
+                <div class="reason-card">❤️ Sifat cuek kamu yang justru bikin makin sayangggg</div>
+                <div class="reason-card">❤️ Pelukan kamu yang rasanya home bangettt nyaa gituuuu</div>
+                <div class="reason-card">❤️ Cara kamu marah yang tetep bikin aku baper ngakak nyaa gituuu</div>
+                <div class="reason-card">❤️ Semua hal tentang kamuuu yang bikin aku makin cinta nyaa gituuuu!</div>
+                <div class="reason-card">❤️ Kamu nerima aku apa adanya, kekurangan ku pun kamu sayanggg</div>
+                <div class="reason-card">❤️ Kamu tuh alasan aku semangat tiap harinya nyaa gituuuu!</div>
+                <div class="reason-card">❤️ Dan masih banyak lagiiii sampe kapanpun gak akan habis nyaa gituuuu!</div>
+            </div>
+        </section>
+
+        <!-- Timeline -->
+        <section id="timeline">
+            <h2 style="font-family: 'Great Vibes'; font-size: 3rem; color: var(--primary); margin-bottom: 2rem;">Our Timeline</h2>
+            <div class="timeline">
+                <div class="timeline-item"><strong>Kita Kenalan</strong><br>Sumpah, pas itu aku gak nyangka cewek secantik ini ada nyaa gituuu.</div>
+                <div class="timeline-item"><strong>Jadi Temen</strong><br>Makin hari makin ketagihan chat kamuuuu, rasanya pengen terus di deketmu nyaa gituuuu.</div>
+                <div class="timeline-item"><strong>Makin Deket</strong><br>Baper banget tiap kali kamu perhatiin aku, hatiku rasanya berdebar-debar nyaa gituuuu!</div>
+                <div class="timeline-item"><strong>Jatuh Cinta</strong><br>Ya ampun, aku malah ngerasa sayang bangetttt sama kamuuu sampe gak bisa diungkapin pake kata-kata nyaa gituuu.</div>
+                <div class="timeline-item"><strong>Sampai Sekarang</strong><br>Makin cinta aja rasanyaa gituuuu! Dan aku bakal terus sama kamu sampe kapanpunnn ❤️</div>
+            </div>
+        </section>
+
+        <!-- Letter -->
+        <section id="letter">
+            <div class="letter-container">
+                <h2>Dear Puput, Sayangkuuu ❤️</h2>
+                <p>Happy National Girlfriend Day, cintakuuu! Hari ini tuh spesial bangetttt buat aku, karena aku punya alasan buat ngerayain keberadaan kamuuu nyaa gituuuu.</p><br>
+                <p>Kamu tau gak sih, setiap hari aku bersyukur bangettt bisa kenal sama cewek secantik, sebaik, sepinter, dan sewangi kamu nyaa gituuuu? Kadang aku sampe nanya ke diriku sendiri, "apa aku mimpi ya dapet cewek seperfect ini nyaa gituuu?". Kamu itu hadiah paling indah yang pernah Tuhan kasih ke aku, seriusan bro bukan gombalan melmulah nyaa gituuuu!</p><br>
+                <p>Pesan yang mengesankan nih ya, dengerin baik-baik. Aku tuh sayang banget sama kamu, sampe kadang aku sendiri bingung mau diapain lagi cintakuuuu ini. Kamu itu tempat pulang paling nyaman nyaa gituuu. Seberat apapun hari aku, cuma liat senyum kamu, denger suara kamu, udah bikin semua beban ilangggg nyaa gituuuu. Kamu tuh vitamin hatiku yang gak bisa aku skip sehari pun nyaa gituuu!</p><br>
+                <p>Makasih ya sayangkuuu udah mau sabar sama aku yang kadang ngeselin, bandel, atau nyebelin nyaa gituuu. Makasih udah selalu ada buat dengerin keluh kesahku, buat ketawa sama candaanku yang garing itu padahal gak lucu tapi kamu ketawa jugaaa. Kamu itu bener-bener malaikatnyaa gituuuu untukkuuu. Aku berjanji deh, aku bakal terus berusaha jadi cowok yang lebih baik lagi buat kamu, yang pantas nemenin kamu, dan yang bisa bikin kamu bangga nyaa gituuuu!</p><br>
+                <p>Aku mau kamu tau, kalau kamu lagi sedih, ada aku. Kalau kamu lagi capek, ada aku. Kalau kamu lagi pengen marah-marah, ya tetep ada aku buat dijadiin tumbal nyaa gituuu (tapi jangan terus-terusan marah ya takut sayangkuuu cantiknya ilang wkwk). Intinya, aku gak akan kemana-mana. Aku bakal tetep di sini, megang tangan kamu, hadepin semuanya bareng-bareng nyaa gituuuu!</p><br>
+                <p>Semoga kita bisa terus tumbuh bersama, saling menguatkan, dan menciptakan lebih banyak kenangan indah sampe kita tua nanti nyaa gituuu. Aku mau mutiara-mutiara kita penuhin album kenangan kita berdua sampai super duper banyakkkkkkkkkkkkkkkkkkk yaaaaaaaaaaaa!</p><br>
+                <p>Happy National Girlfriend Day, Puput. I love you super duper muchhhhhhhhhhh!</p><br>
+                <p><strong>I love you, today, tomorrow, and every day after that, endlessly nyaa gituuuuu! ❤️❤️❤️</strong></p><br>
+                <p style="text-align: right; font-family: 'Great Vibes'; font-size: 1.5rem;">Love, Ridho</p>
+            </div>
+        </section>
+
+        <!-- Memory -->
+        <section id="memory">
+            <h2 style="font-family: 'Great Vibes'; font-size: 3rem; color: var(--primary); margin-bottom: 1rem;">Our Memories</h2>
+            <p style="margin-bottom: 2rem; font-size: 1.1rem; text-align: center;">Setiap momen sama kamu tuh gak akan pernah terganti nyaa gituuuu, mutiara-mutiara terbaikkuuu!</p>
+            <div class="memory-slider">
+                <div class="memory-card">
+                    <h3>Chat Pertama</h3>
+                    <p style="margin-top: 10px;">Deg-degan banget mau mulai obrolan nyaa gituuu. Sumpah aku sampe hapus-hapus ketikan berkali-kali takut salah ngomong! 🥺</p>
+                </div>
+                <div class="memory-card">
+                    <h3>Tawa Pertama</h3>
+                    <p style="margin-top: 10px;">Pas kamu ketawa, langsung baper anjir! Sumpah tawa kamu tuh healing bangetttt nyaa gituuuu, auto lupa sama dunia! 🤍</p>
+                </div>
+                <div class="memory-card">
+                    <h3>Telepon Pertama</h3>
+                    <p style="margin-top: 10px;">Suara kamu tuh bikin nyaman bangeeetttt. Pengen banget waktu dihentikan biar bisa terus dengerin suaramu nyaa gituuuu. 📞❤️</p>
+                </div>
+                <div class="memory-card">
+                    <h3>Ucapan I Miss You</h3>
+                    <p style="margin-top: 10px;">Pertama kali kamu bilang kangen, dada ini rasanya panas bercampur aduk anjir nyaa gituuuu, langsung pengen fly kerumahmu kalau bisa! ✈️❤️</p>
+                </div>
+                <div class="memory-card">
+                    <h3>Saat Ini</h3>
+                    <p style="margin-top: 10px;">Mencintaimu lebih dari semalam, dan akan terus mencintaimu sampe kapanpunnyaa gituuuu! Gak akan pernah berubah sayangkuuu! ❤️</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Promise -->
+        <section id="promise">
+            <h2 style="font-family: 'Great Vibes'; font-size: 3rem; margin-bottom: 1rem;">My Promises</h2>
+            <p style="margin-bottom: 2rem; font-size: 1.1rem; text-align: center; opacity: 0.9;">Aku bakal segedila ini tepati semuanya nyaa gituuuu!</p>
+            <ul class="promise-list">
+                <li><i class="fas fa-check-circle"></i> Aku bakal selalu support kamu apapun mimpi kamu nyaa gituuu.</li>
+                <li><i class="fas fa-check-circle"></i> Aku bakal selalu dengerin keluh kesahmu sampe jam berapapunnnn.</li>
+                <li><i class="fas fa-check-circle"></i> Aku bakal selalu hargai keputusanmu, sayangkuuu.</li>
+                <li><i class="fas fa-check-circle"></i> Aku bakal selalu jujur, gak akan ada rahasia di antara kita nyaa gituuu.</li>
+                <li><i class="fas fa-check-circle"></i> Aku bakal selalu ngejagain hatimu mati-matian, bahkan dari nyamuk nyaa gituuu.</li>
+                <li><i class="fas fa-check-circle"></i> Aku bakal bikin kamu bangga punya pacar kayak aku nyaa gituuuu!</li>
+                <li><i class="fas fa-check-circle"></i> Aku bakal terus milih kamu, hari ini, besok, sampe kapanpunnyaa gituuuu!</li>
+                <li><i class="fas fa-check-circle"></i> Aku bakal sayang kamu super duper banyakkkkkkkkkkkkkkkkkkk yaaaaaaaaaaaa!</li>
+            </ul>
+        </section>
+
+        <!-- Countdown -->
+        <section id="countdown">
+            <div class="glass-card">
+                <h2>Countdown Until We Meet Again ❤️</h2>
+                <p style="margin-top: 10px; font-size: 1.1rem;">Pengen banget cepetan ketemu kamu nyaa gituuuu, goosebumps banget nunggu hari itu!</p>
+                <div class="counter-grid">
+                    <div class="counter-item">
+                        <div class="counter-num" id="cd-days">23</div>
+                        <div class="counter-label">Days</div>
+                    </div>
+                    <div class="counter-item">
+                        <div class="counter-num" id="cd-hours">14</div>
+                        <div class="counter-label">Hours</div>
+                    </div>
+                    <div class="counter-item">
+                        <div class="counter-num" id="cd-mins">12</div>
+                        <div class="counter-label">Minutes</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final Surprise -->
+        <section id="surprise">
+            <h2 style="font-family: 'Great Vibes'; font-size: 3rem; color: var(--primary); margin-bottom: 1rem;">One Last Thing...</h2>
+            <p style="margin-bottom: 2rem; font-size: 1.1rem; text-align: center; max-width: 800px;">Aku cuma mau bilang, kamu itu alasan aku nyemangatin tiap hari. Pencet tombol ini ya sayangkuuu nyaa gituuuu!</p>
+            <button class="btn-surprise" id="surpriseBtn">Click Me ❤️</button>
+        </section>
+
+    </main>
+
+    <!-- Fireworks Canvas -->
+    <canvas id="fireworks-canvas"></canvas>
+    <div class="final-message" id="finalMessage">
+        <h1 style="font-family: 'Great Vibes'; font-size: 4rem;">Happy National<br>Girlfriend Day<br>Puput ❤️</h1>
+        <p style="font-size: 1.5rem; margin-top: 20px;">Makasih ya sayangkuuu sudah menerangi hariku nyaa gituuuu...</p>
+        <p style="font-size: 1.5rem; margin-top: 10px;">Kamu itu segalanyaaa buat aku!</p>
+        <p style="font-size: 2rem; margin-top: 20px; font-weight: bold;">I Love You Super Duper Muchhhhhhhhhhh! ❤️❤️❤️</p>
+    </div>
+
+    <script>
+        // Images Array
+        const images = [
+            { url: "https://z-cdn-media.chatglm.cn/files/3073ce2c-624d-4039-9cae-81764b6107bb.jpg?auth_key=1885540116-5d8a1fa3516e411d80cd9dccb9fc1ebd-0-565d9ee0e4a07537096fca2ece99f4de", caption: "Senyum ini tuh bikin hatiku meltss nyaa gituuu.", span: "span-4" },
+            { url: "https://z-cdn-media.chatglm.cn/files/e0008019-6202-4cfe-80a8-9a4ca620d946.jpg?auth_key=1885540116-8b6210b127e2413fb5ad3c2bb58e546e-0-b7d6262692a091e807837ef700feeef5", caption: "Satu foto, auto bikin baper nyaa gituuuu.", span: "span-2" },
+            { url: "https://z-cdn-media.chatglm.cn/files/e5037203-d876-40e2-b453-c03bcfb1f283.jpg?auth_key=1885540116-79447415654249a3bc6fe8bcc41eb86a-0-269161fc752a36d579a39606ba3dd61b", caption: "Tetep orang favoritku nyaa gituuuu.", span: "span-2" },
+            { url: "https://z-cdn-media.chatglm.cn/files/a3ac6e0a-a0bf-40a0-a57e-93451c6796e6.jpg?auth_key=1885540116-5f9d7d12402f4f1f95dc9a8a1acc05aa-0-3d1c8c57905c9240ff1626f7a1fbf08e", caption: "Bisa liat seharian gak akan bosen nyaa gituuu.", span: "span-2" },
+            { url: "https://z-cdn-media.chatglm.cn/files/607f225a-7b98-4027-a96e-4705a214e053.jpg?auth_key=1885540116-53de152ea339452982b32ec343fabf97-0-ea12880a7dd0ecfcd3e76caa2f0fe248", caption: "Bikin hari biasa jadi spesial nyaa gituuu.", span: "span-2" },
+            { url: "https://z-cdn-media.chatglm.cn/files/c3ae7f7b-7b4c-4a54-9277-4b91adb143c6.jpeg?auth_key=1885540116-76b718af5539417f9ce99c8b998ba725-0-735cd25813b00746da2bf93010c883b9", caption: "Cute. Very cute. Super duper cuteee nyaa gituuuu.", span: "span-4" },
+            { url: "https://z-cdn-media.chatglm.cn/files/c1468d73-daef-4da3-a63f-bb1a62232b8c.jpeg?auth_key=1885540116-4ab6d58ab79d47278037634ad6aba66c-0-d14d195975ffef5ab325a261740d3a54", caption: "Gimana bisa secantik ini nyaa gituuu sih?", span: "span-2" },
+            { url: "https://z-cdn-media.chatglm.cn/files/b35414a5-a37a-4420-85d6-b5d8c44440e1.jpeg?auth_key=1885540116-58d469f179ca45c19c2c9d5240302688-0-7d1d8d519a38f596721eed6df3dc2ab5", caption: "Tempat ternyamankuuu nyaa gituuuu.", span: "span-2" },
+            { url: "https://z-cdn-media.chatglm.cn/files/604874f6-16f4-4302-9bd3-b08dd0592aaf.jpeg?auth_key=1885540116-7c28a76f2b65465e977681f64d3e4267-0-860215692b34239b7af759294adca548", caption: "Makasih udah milih aku nyaa gituuuu.", span: "span-2" },
+            { url: "https://z-cdn-media.chatglm.cn/files/908758f1-9a9b-452b-916c-5c7263a97238.jpeg?auth_key=1885540116-b124ed4eb6134b5a9cf8b76aa46e1e60-0-c3dbbe524244baacb676ebcb2bcc6654", caption: "Notifikasi paling ditunggu nyaa gituuuu.", span: "span-2" },
+            // Repeating to fill slots
+            { url: "https://z-cdn-media.chatglm.cn/files/3073ce2c-624d-4039-9cae-81764b6107bb.jpg?auth_key=1885540116-5d8a1fa3516e411d80cd9dccb9fc1ebd-0-565d9ee0e4a07537096fca2ece99f4de", caption: "Semuanya jadi ringan kalau sama kamu nyaa gituuu.", span: "span-4" },
+            { url: "https://z-cdn-media.chatglm.cn/files/e0008019-6202-4cfe-80a8-9a4ca620d946.jpg?auth_key=1885540116-8b6210b127e2413fb5ad3c2bb58e546e-0-b7d6262692a091e807837ef700feeef5", caption: "Home sweet home nyaa gituuuu.", span: "span-2" },
+            { url: "https://z-cdn-media.chatglm.cn/files/e5037203-d876-40e2-b453-c03bcfb1f283.jpg?auth_key=1885540116-79447415654249a3bc6fe8bcc41eb86a-0-269161fc752a36d579a39606ba3dd61b", caption: "Forever my favorite girl nyaa gituuuu.", span: "span-2" },
+            { url: "https://z-cdn-media.chatglm.cn/files/a3ac6e0a-a0bf-40a0-a57e-93451c6796e6.jpg?auth_key=1885540116-5f9d7d12402f4f1f95dc9a8a1acc05aa-0-3d1c8c57905c9240ff1626f7a1fbf08e", caption: "Happy National Girlfriend Day ❤️ nyaa gituuuu", span: "span-2" },
+            { url: "https://z-cdn-media.chatglm.cn/files/607f225a-7b98-4027-a96e-4705a214e053.jpg?auth_key=1885540116-53de152ea339452982b32ec343fabf97-0-ea12880a7dd0ecfcd3e76caa2f0fe248", caption: "My ultimate happiness nyaa gituuuu.", span: "span-2" }
+        ];
+
+        const galleryGrid = document.getElementById('galleryGrid');
+        images.forEach(img => {
+            const div = document.createElement('div');
+            div.className = `gallery-item ${img.span}`;
+            div.innerHTML = `
+                <img src="${img.url}" alt="Puput">
+                <div class="gallery-caption">${img.caption}</div>
+            `;
+            div.addEventListener('click', () => {
+                window.open(img.url, '_blank');
+            });
+            galleryGrid.appendChild(div);
+        });
+
+        // Floating Hearts
+        const heartsContainer = document.getElementById('hearts-container');
+        setInterval(() => {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.fontSize = Math.random() * 20 + 10 + 'px';
+            heart.style.animationDuration = Math.random() * 5 + 5 + 's';
+            heartsContainer.appendChild(heart);
+            setTimeout(() => heart.remove(), 10000);
+        }, 500);
+
+        // Custom Cursor
+        document.addEventListener('mousemove', function(e) {
+            const heart = document.createElement('div');
+            heart.classList.add('heart-cursor');
+            heart.innerHTML = '❤';
+            heart.style.left = e.clientX + 'px';
+            heart.style.top = e.clientY + 'px';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 1000);
+        });
+
+        // Loading Screen
+        setTimeout(() => {
+            document.getElementById('loader').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('loader').style.display = 'none';
+                startOpening();
+            }, 1000);
+        }, 3000);
+
+        // Opening Sequence
+        function startOpening() {
+            const t1 = document.getElementById('text1');
+            const t2 = document.getElementById('text2');
+            const t3 = document.getElementById('text3');
+            const btn = document.getElementById('openBtn');
+
+            setTimeout(() => { t1.style.transition = 'opacity 1s'; t1.style.opacity = 1; }, 500);
+            setTimeout(() => { t1.style.opacity = 0; }, 2500);
+            setTimeout(() => { t2.style.transition = 'opacity 1s'; t2.style.opacity = 1; }, 3500);
+            setTimeout(() => { t2.style.opacity = 0; }, 5500);
+            setTimeout(() => { 
+                t3.style.transition = 'opacity 1s'; 
+                t3.style.opacity = 1; 
+                btn.style.display = 'block';
+                setTimeout(() => { btn.style.transition = 'opacity 1s'; btn.style.opacity = 1; }, 1000);
+            }, 6500);
+        }
+
+        document.getElementById('openBtn').addEventListener('click', () => {
+            const opening = document.getElementById('opening');
+            opening.style.opacity = '0';
+            setTimeout(() => {
+                opening.style.display = 'none';
+                document.querySelector('main').style.opacity = '1';
+                startMusic();
+                initScrollAnimations();
+            }, 1500);
+        });
+
+        // Music
+        const music = document.getElementById('bgMusic');
+        const musicBtn = document.getElementById('musicBtn');
+        let isPlaying = false;
+
+        function startMusic() {
+            music.play().catch(e => console.log("Autoplay blocked"));
+            isPlaying = true;
+            musicBtn.innerHTML = '<i class="fas fa-pause"></i>';
+        }
+
+        musicBtn.addEventListener('click', () => {
+            if (isPlaying) {
+                music.pause();
+                musicBtn.innerHTML = '<i class="fas fa-music"></i>';
+            } else {
+                music.play();
+                musicBtn.innerHTML = '<i class="fas fa-pause"></i>';
+            }
+            isPlaying = !isPlaying;
+        });
+
+        // Counters
+        const startDate = new Date();
+        startDate.setDate(startDate.getDate() - 128); // Example 128 days ago
+
+        function updateCounter() {
+            const now = new Date();
+            const diff = now - startDate;
+            
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+            document.getElementById('days').innerText = days;
+            document.getElementById('hours').innerText = hours;
+            document.getElementById('minutes').innerText = minutes;
+        }
+        setInterval(updateCounter, 1000);
+        updateCounter();
+
+        // Countdown
+        const targetDate = new Date();
+        targetDate.setDate(targetDate.getDate() + 23);
+
+        function updateCountdown() {
+            const now = new Date();
+            const diff = targetDate - now;
+            
+            const days = Math.max(0, Math.floor(diff / (1000 * 60 * 60 * 24)));
+            const hours = Math.max(0, Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
+            const minutes = Math.max(0, Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)));
+
+            document.getElementById('cd-days').innerText = days;
+            document.getElementById('cd-hours').innerText = hours;
+            document.getElementById('cd-mins').innerText = minutes;
+        }
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // Scroll Animations
+        function initScrollAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.promise-list li').forEach((li, index) => {
+                li.style.transitionDelay = `${index * 0.2}s`;
+                observer.observe(li);
+            });
+        }
+
+        // Surprise Fireworks
+        const canvas = document.getElementById('fireworks-canvas');
+        const ctx = canvas.getContext('2d');
+        const finalMsg = document.getElementById('finalMessage');
+
+        document.getElementById('surpriseBtn').addEventListener('click', () => {
+            canvas.style.display = 'block';
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            
+            setTimeout(() => {
+                finalMsg.style.display = 'block';
+            }, 1500);
+
+            startFireworks();
+        });
+
+        function startFireworks() {
+            let particles = [];
+            
+            function loop() {
+                ctx.fillStyle = 'rgba(0,0,0,0.1)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                if(Math.random() < 0.1) {
+                    createFirework();
+                }
+
+                for(let i = particles.length - 1; i >= 0; i--) {
+                    particles[i].update();
+                    particles[i].draw();
+                    if(particles[i].alpha <= 0) particles.splice(i, 1);
+                }
+                requestAnimationFrame(loop);
+            }
+
+            function createFirework() {
+                const x = Math.random() * canvas.width;
+                const y = Math.random() * canvas.height * 0.5;
+                const color = `hsl(${Math.random() * 60 + 330}, 100%, 60%)`; // Pink/Red hues
+                
+                for(let i = 0; i < 50; i++) {
+                    particles.push(new Particle(x, y, color));
+                }
+            }
+
+            class Particle {
+                constructor(x, y, color) {
+                    this.x = x;
+                    this.y = y;
+                    this.color = color;
+                    this.radius = Math.random() * 3 + 1;
+                    this.alpha = 1;
+                    this.vx = (Math.random() - 0.5) * 8;
+                    this.vy = (Math.random() - 0.5) * 8;
+                }
+                update() {
+                    this.x += this.vx;
+                    this.y += this.vy;
+                    this.alpha -= 0.01;
+                    this.vx *= 0.99;
+                    this.vy *= 0.99;
+                }
+                draw() {
+                    ctx.save();
+                    ctx.globalAlpha = this.alpha;
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = this.color;
+                    ctx.fill();
+                    ctx.restore();
+                }
+            }
+            loop();
+        }
+    </script>
+</body>
+</html>
